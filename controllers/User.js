@@ -1,6 +1,6 @@
 let User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const { createUserValidation, loginValidation } = require('../middlewares/validateUser')
+const { createUserValidation, loginValidation } = require('../middlewares/validation/validateUser')
 const jwt = require('jsonwebtoken');
 
 
