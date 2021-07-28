@@ -79,10 +79,67 @@ const loginUser = async (req, res) =>{
 }
 
 
+//get all users
+const getUsers = async (req, res) =>{
+    try{
+        let users = await User.find({});
+        res.json(users)
+    }catch(err){
+        res.status(400).json({
+            error: err
+        })
+    }
+}
+
+//get a specified user
+const getSingleUser = async (req, res)=>{
+    try{
+        let findSingleUser = await User.findOne({id: req.params._id});
+        return res.send(findSingleUser);
+
+    }catch(err){
+        res.status(400).json(err)
+
+    }
+}
+
+//Update a user
+const updateUserInfo = async (req, res) =>{
+    await User.findOne({id: req.params._id})
+    .then(doc => User.updateOne({_id: doc._id}, {name: req.body.name, email: req.body.email, password: req.body.password}))
+    .then(()=>User.findOne({email: req.body.email}))
+    .then(doc => {
+        res.json({
+            id: doc._id,
+            name: doc.name,
+            email:doc.email,
+            password: doc.password
+        })
+        console.log(doc.name)
+    });
+}
+
+//delete a user
+const deleteUser = async (req, res) =>{
+  try{
+    await User.findOneAndDelete({_id: req.params.id})
+    res.send("successful")
+  }catch(err){
+ res.send(err)
+  }
+  
+ 
+}
 
 
- module.exports = { createUser, loginUser, }
-
+ module.exports = { 
+     createUser,
+     loginUser,
+     getUsers,
+     getSingleUser,
+     updateUserInfo,
+     deleteUser
+     }
 
 
 
