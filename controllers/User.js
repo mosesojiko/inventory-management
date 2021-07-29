@@ -1,7 +1,8 @@
 let User = require('../models/User');
 const bcrypt = require('bcryptjs');
-const { createUserValidation, loginValidation } = require('../middlewares/validation/validateUser')
+const { createUserValidation, loginValidation } = require('../middlewares/validateUser')
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose')
 
 
 
@@ -22,6 +23,7 @@ const createUser = async (req, res) =>{
     const hashPassword = await bcrypt.hash(req.body.password, 10)
     //create a user based on user schema
     let user = new User({
+        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         email: req.body.email,
         password: hashPassword
@@ -32,17 +34,10 @@ const createUser = async (req, res) =>{
     try {
         const saveUser = await user.save();
         
-        //create and assign a token using jwt
-    const token = jwt.sign({_id: user._id}, process.env.USER_SECRET_TOKEN)
-    // res.header('login-token', token).send(token)
-    //   let header = ('login-token', token)
-
         res.json({
             status: 200,
             success: true,
-            header: 'login-token',
             saveUser,
-            token
         })
         console.log(saveUser)
         
@@ -75,9 +70,15 @@ const loginUser = async (req, res) =>{
     if(!validPassword){
         return res.status(400).send("Invalid Password");
     }
-    res.send("You are logged in")
-}
 
+     //create and assign a token using jwt
+     const token = jwt.sign({_id: user._id}, process.env.USER_SECRET_TOKEN)
+
+    return res.json({
+        msg: "You are logged In",
+        token
+    })
+}
 
 //get all users
 const getUsers = async (req, res) =>{
@@ -140,6 +141,7 @@ const deleteUser = async (req, res) =>{
      updateUserInfo,
      deleteUser
      }
+
 
 
 
