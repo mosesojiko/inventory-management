@@ -6,7 +6,7 @@ const Products = require('../models/Product');
 const createProduct = async (req, res) =>{
 
     //check if there is a product with numberInStock 
-    const checkNumberInStock = await User.findOne({numberInStock: req.body.numberInStock})
+    const checkNumberInStock = await Products.findOne({numberInStock: req.body.numberInStock})
     if(checkNumberInStock){
         return res.status(400).send("NumberInStock already exist.")
     }
