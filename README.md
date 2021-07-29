@@ -1,5 +1,12 @@
 
 # Inventory Management App (Backend)
+This is a backend application for an inventory management store. It allows a user to create an account, create products for his store, do basic operations like updating, and deleting products.
+##Technologies used includes:
+- JavaScript
+- Node Js
+- Express framework
+- Mongodb Atlas for data storage
+- Postman for testing our endpoints.
 ## Documentation
 
 ## Signup Route
@@ -63,7 +70,7 @@ This endpoint is used to update a user specified product using the product ID. I
 http://127.0.0.1:5000/products/delete/id
 ### Example usage
 http://127.0.0.1:5000/products/delete/61029b05a30d4c1e985ca6f5
-Description:
+##Description:
 This endpoint deletes a particular product from the database using the product ID.
 
 ## Get all products by a user
