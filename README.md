@@ -74,7 +74,7 @@ http://127.0.0.1:5000/products/delete/61029b05a30d4c1e985ca6f5
 This endpoint deletes a particular product from the database using the product ID.
 
 ## Get all products by a user
-http://127.0.0.1:5000/products/all
+http://127.0.0.1:5000/products
 ## Descripttion:
-This endpoint returns all products posted by a user. It is a protected route.
+This endpoint returns all products posted by a user using the get method. It is a protected route.
 
