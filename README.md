@@ -41,9 +41,9 @@ This endpoint deletes a user. The last part of the url above is the id. Since it
 
 ## Route to create a product
 http://127.0.0.1:5000/products
-**Note that only registered users can create and modify their products**
 ###Description:
 This is a protected endpoint. For a user to create a product, he will first create and account, log-in to his account, and then create products. Since, it is a protected route, he cannot create product without his log-in token which was generated during log-in.
+**Note that only registered users can create and modify their products**
 
 ## Get a single product by a user
 http://127.0.0.1:5000/products
