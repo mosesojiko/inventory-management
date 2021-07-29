@@ -1,7 +1,7 @@
 
 # Inventory Management App (Backend)
 This is a backend application for an inventory management store. It allows a user to create an account, create products for his store, do basic operations like updating, and deleting products.
-##Technologies used includes:
+## Technologies used includes:
 - JavaScript
 - Node Js
 - Express framework
@@ -48,7 +48,7 @@ This endpoint deletes a user. The last part of the url above is the id. Since it
 
 ## Route to create a product
 http://127.0.0.1:5000/products
-###Description:
+### Description:
 This is a protected endpoint. For a user to create a product, he will first create and account, log-in to his account, and then create products. Since, it is a protected route, he cannot create product without his log-in token which was generated during log-in.
 **Note that only registered users can create and modify their products**
 
@@ -70,11 +70,11 @@ This endpoint is used to update a user specified product using the product ID. I
 http://127.0.0.1:5000/products/delete/id
 ### Example usage
 http://127.0.0.1:5000/products/delete/61029b05a30d4c1e985ca6f5
-##Description:
+## Description:
 This endpoint deletes a particular product from the database using the product ID.
 
 ## Get all products by a user
 http://127.0.0.1:5000/products/all
-##Descripttion:
+## Descripttion:
 This endpoint returns all products posted by a user. It is a protected route.
 
