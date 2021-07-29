@@ -54,8 +54,9 @@ const getSingleProduct = async (req, res) =>{
 
 //get all products by a user
 const getAllProducts = async (req, res) =>{
+    let userid =  req.user._id
     try {
-      let allUserProducts =  await Products.find({user: req.user._id})
+      let allUserProducts =  await Products.find({user:userid})
       res.json({
           message: "List of your product.",
           allUserProducts
@@ -72,7 +73,7 @@ const getAllProducts = async (req, res) =>{
 // update a user product
 const updateProduct = async (req , res) => {
 try {
-    let productToUpdate = await Products.findOneAndUpdate({user: req.user._id, _id: req.params.id},
+    let productToUpdate = await Products.findOneAndUpdate({user: req.user._id, _id: req.params.id,},
             {...req.body} , {new: true})
         if (!productToUpdate) return res.status(400).json({ msg: `product not found`})
         let updatedProduct = await productToUpdate.save()
@@ -88,12 +89,8 @@ try {
 //Delete a product
 const deleteProduct = async (req , res) => {
 try {
-const productToDelete =  await Product.findOneAndDelete({user: req.user._id, _id: req.params.id})
-if (!productToDelete) return res.status(400).json({ success: false , msg: `product not found`})
-res.status(200).json({
-    success: true , 
-    msg: "Product was deleted successfully." 
-})
+    await Products.findOneAndDelete({_id: req.params.id,user: req.user._id });
+    res.send("Product deleted successfully")
 } catch (error) {
     res.status(400).json({
         msg: error , 

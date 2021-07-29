@@ -10,7 +10,7 @@ router.post('/', verifyToken, createProduct)
 router.get('/:id', verifyToken, getSingleProduct)
 
 //get all products
-router.get('/all',verifyToken, getAllProducts)
+router.get('/',verifyToken, getAllProducts)
 
 //update a product
 router.put('/update/:id', verifyToken, updateProduct);
