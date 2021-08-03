@@ -11,6 +11,7 @@ const PORT = process.env.PORT;
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use("/products/image", express.static('upload/images'))
 
 //connect to db
 mongoose.connect(process.env.CONNECT_TO_DB,{ useNewUrlParser: true, useUnifiedTopology: true },()=>{
