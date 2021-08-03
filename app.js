@@ -23,6 +23,10 @@ app.use('/user', userRoute);
 //product route
 app.use('/products', productRouter)
 
+app.get('/', (req, res) =>{
+    res.send("This is the default page, you can navigate to other routes.")
+})
+
 //testing route
 app.get('/user',(req, res)=>{
    res.send("Base route for user")
