@@ -8,5 +8,5 @@ This is a backend application for an inventory management store. It allows a use
 - Mongodb Atlas for data storage
 - Postman for testing our endpoints.
 ## Documentation and endpoints
-Kindly view the documentation by clicking  [here]{https://documenter.getpostman.com/view/16479485/TzshHR2S}
+Kindly view the documentation by clicking  [here](https://documenter.getpostman.com/view/16479485/TzshHR2S)
 
