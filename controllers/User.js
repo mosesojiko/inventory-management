@@ -5,15 +5,13 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
 
 
-
+//create a user
 const createUser = async (req, res) =>{
-    //validate the user data before creating a user
-    //Let's validate the data before we make a user
+    //Let's validate the data before we create a user
     const {error} = createUserValidation(req.body)
-    if(error) return res.send({"error":error.details[0].message});
+    if(error) return res.json({"error":error.details[0].message});
 
     //checking if the user is already in the database using email.
-    //to avoid populating the database with same user
     const existingEmail = await User.findOne({email: req.body.email})
     if(existingEmail){
         return res.status(400).send("Email already exist")
@@ -37,9 +35,11 @@ const createUser = async (req, res) =>{
         res.json({
             status: 200,
             success: true,
-            saveUser,
+            id: saveUser._id,
+            name:saveUser.name,
+            email: saveUser.email
         })
-        console.log(saveUser)
+       
         
     } catch (error) {
         res.json({
@@ -84,7 +84,14 @@ const loginUser = async (req, res) =>{
 const getUsers = async (req, res) =>{
     try{
         let users = await User.find({});
-        res.json(users)
+
+        if(users.length === 0){
+            return res.send("There is no registered user in the database.")
+        }else{
+            res.json(users)
+
+        }
+        
     }catch(err){
         res.status(400).json({
             error: err
@@ -96,7 +103,12 @@ const getUsers = async (req, res) =>{
 const getSingleUser = async (req, res)=>{
     try{
         let findSingleUser = await User.findOne({id: req.params._id});
-        return res.send(findSingleUser);
+        if(!findSingleUser){
+            res.send(`The user with ${req.params.id} is not found.`)
+        }
+        else{
+            return res.send(findSingleUser);
+        }
 
     }catch(err){
         res.status(400).json(err)
@@ -106,6 +118,20 @@ const getSingleUser = async (req, res)=>{
 
 //Update a user
 const updateUserInfo = async (req, res) =>{
+    let {name, email, password } = req.body;
+    if(!name || !email || !password){
+        return res.send("All fields are required.")
+    }
+
+    //checking if the user is already in the database using email.
+    const existingEmail = await User.findOne({email: req.body.email})
+    if(existingEmail){
+        return res.status(400).send("Email already exist")
+    }
+
+    //hash the user password
+    password = await bcrypt.hash(req.body.password, 10)
+
     await User.findOne({id: req.params._id})
     .then(doc => User.updateOne({_id: doc._id}, {name: req.body.name, email: req.body.email, password: req.body.password}))
     .then(()=>User.findOne({email: req.body.email}))
@@ -114,9 +140,8 @@ const updateUserInfo = async (req, res) =>{
             id: doc._id,
             name: doc.name,
             email:doc.email,
-            password: doc.password
         })
-        console.log(doc.name)
+        
     });
 }
 
@@ -124,7 +149,7 @@ const updateUserInfo = async (req, res) =>{
 const deleteUser = async (req, res) =>{
   try{
     await User.findOneAndDelete({_id: req.params.id})
-    res.send("successful")
+    res.send("User successfully deleted")
   }catch(err){
  res.send(err)
   }
